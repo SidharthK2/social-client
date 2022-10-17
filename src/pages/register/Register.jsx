@@ -6,7 +6,7 @@ export default function Register() {
       <div className="loginWrapper">
         <div className="loginLeft">
           <h3 className="loginLogo">Social</h3>
-          <span className="loginDesc">Connect with friends.</span>
+          <span className="loginDesc">Connect with friends</span>
         </div>
         <div className="loginRight">
           <div className="loginBox">
@@ -15,7 +15,7 @@ export default function Register() {
             <input placeholder="Password" className="loginInput" />
             <input placeholder="Password Again" className="loginInput" />
             <button className="loginButton">Sign Up</button>
-            <button className="loginRegisterButton">Log into Account</button>
+            <button className="loginRegisterButton">Login</button>
           </div>
         </div>
       </div>
