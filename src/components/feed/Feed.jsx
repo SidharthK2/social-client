@@ -9,13 +9,14 @@ export default function Feed({ username }) {
 
   useEffect(() => {
     const fetchPosts = async () => {
+      console.log(`in feed effects user ${username}`);
       const res = username
         ? await axios.get("/posts/profile/" + username)
-        : await axios.get("/posts/profile/634be786a0346d78bf29f0c3");
+        : await axios.get("/posts/timeline/634be786a0346d78bf29f0c3");
       setPosts(res.data);
     };
     fetchPosts();
-  }, []);
+  }, [username]);
   console.log(posts);
   return (
     <div className="feed">

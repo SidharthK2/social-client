@@ -6,15 +6,16 @@ import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 
 export default function Post({ post }) {
-  console.log("entered post comp");
+  console.log("entered post ");
   const [like, setLike] = useState(post.likes);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  console.log(post.userId);
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(`users/${post.userId}`);
+      const res = await axios.get(`/users?userId=${post.userId}`);
       setUser(res.data);
     };
     fetchUser();
@@ -24,12 +25,13 @@ export default function Post({ post }) {
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
+  console.log(user);
   return (
     <div className="post">
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <Link to={`profile/${user.username}`}>
+            <Link to={`/profile/${user.username}`}>
               <img
                 className="postProfileImg"
                 src={user.profilePicture || PF + "/person/stockDp.jpg"}
@@ -49,12 +51,6 @@ export default function Post({ post }) {
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
-            <img
-              className="likeIcon"
-              src={`${PF}/like.png`}
-              onClick={likeHandler}
-              alt=""
-            />
             <img
               className="likeIcon"
               src={`${PF}/heart.png`}
