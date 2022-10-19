@@ -21,9 +21,10 @@ export default function Share() {
     if (file) {
       const data = new FormData();
       const fileName = Date.now() + file.name;
-      data.append("file", file);
       data.append("name", fileName);
+      data.append("file", file);
       newPost.img = fileName;
+      console.log(newPost);
       try {
         await axios.post("/upload", data);
       } catch (error) {
@@ -33,6 +34,7 @@ export default function Share() {
 
     try {
       await axios.post("/posts", newPost);
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -59,8 +61,8 @@ export default function Share() {
         </div>
         <hr className="shareHr" />
         <form className="shareBottom" onSubmit={sumbitHandler}>
-          <div className="shareOption">
-            <label htmlFor="file" className="shareOptions">
+          <label htmlFor="file" className="shareOptions">
+            <div className="shareOption">
               <PermMedia htmlColor="tomato" className="shareIcon" />
               <span className="shareOptionText">Photo</span>
               <input
@@ -70,8 +72,8 @@ export default function Share() {
                 accept=".png, .jpeg, .jpg"
                 onChange={(e) => setFile(e.target.files[0])}
               />
-            </label>
-          </div>
+            </div>
+          </label>
           <button className="shareButton" type="submit">
             Post
           </button>
