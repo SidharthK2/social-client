@@ -25,15 +25,19 @@
 }
 
 .shareInput {
+  text-align: center;
   border: none;
+  background-color: #737174;
   width: 80%;
-  background-color: #919495;
+  color: white;
 }
 
 .shareInput::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: rgb(42, 43, 51);
+  font-size: medium;
   opacity: 1; /* Firefox */
+  color: rgb(224, 224, 125);
 }
 
 .shareInput:focus {

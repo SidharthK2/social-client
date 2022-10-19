@@ -25,11 +25,11 @@ export default function Login() {
     <div className="login">
       <div className="loginWrapper">
         <div className="loginLeft">
-          <h3 className="loginLogo">Social</h3>
-          <span className="loginDesc">Connect with friends on Social</span>
+          <h3 className="loginLogo">Batcave</h3>
+          <span className="loginDesc">Join the Cult</span>
         </div>
         <div className="loginRight">
-          <form className="loginBox" /*onSubmit={handleClick}*/>
+          <form className="loginBox">
             <input
               placeholder="Email"
               type="email"

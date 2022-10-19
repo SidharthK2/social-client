@@ -1,17 +1,23 @@
 import "./post.css";
 import { MoreVert } from "@material-ui/icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Post({ post }) {
   console.log("entered post ");
-  const [like, setLike] = useState(post.likes);
+  const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   console.log(post.userId);
+  const { user: currentUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    setIsLiked(post.likes.includes(currentUser._id));
+  }, [currentUser._id, post.likes]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -22,6 +28,11 @@ export default function Post({ post }) {
   }, [post.userId]);
 
   const likeHandler = () => {
+    try {
+      axios.put("/posts/" + post._id + "/like", { userId: currentUser._id });
+    } catch (error) {
+      console.log(error);
+    }
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
@@ -34,7 +45,11 @@ export default function Post({ post }) {
             <Link to={`/profile/${user.username}`}>
               <img
                 className="postProfileImg"
-                src={user.profilePicture || PF + "/person/stockDp.jpg"}
+                src={
+                  user.profilePicture
+                    ? PF + user.profilePicture
+                    : PF + "/person/stockDp.jpg"
+                }
                 alt=""
               />
             </Link>
@@ -58,9 +73,7 @@ export default function Post({ post }) {
               alt=""
             />
             <span className="postLikeCounter">
-              {`${like.length} ${
-                like.length !== 1 ? "people like" : "person likes"
-              }  it`}
+              {`${like} ${like !== 1 ? "people like" : "person likes"}  it`}
             </span>
           </div>
           <div className="postBottomRight">

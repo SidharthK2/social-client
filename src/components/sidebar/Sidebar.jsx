@@ -12,22 +12,27 @@ import {
 } from "@material-ui/icons";
 import { Users } from "../../dummyData";
 import CloseFriend from "../closeFriend/CloseFriend";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 export default function Sidebar() {
+  const { user } = useContext(AuthContext);
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
         <ul className="sidebarList">
-          <li className="sidebarListItem">
-            <RssFeed className="sidebarIcon" />
-            <span className="sidebarListItemText">Feed</span>
-          </li>
+          <Link to={`/`} style={{ textDecoration: "none" }}>
+            <li className="sidebarListItem">
+              <RssFeed className="sidebarIcon" />
+              <span className="sidebarListItemText">Feed</span>
+            </li>
+          </Link>
           <li className="sidebarListItem">
             <Chat className="sidebarIcon" />
             <span className="sidebarListItemText">Chats</span>
           </li>
         </ul>
-        <button className="sidebarButton">Show More</button>
         <hr className="sidebarHr" />
         <ul className="sidebarFriendList">
           {Users.map((u) => (

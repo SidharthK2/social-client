@@ -33,7 +33,7 @@ export default function Register() {
     <div className="login">
       <div className="loginWrapper">
         <div className="loginLeft">
-          <h3 className="loginLogo">Social</h3>
+          <h3 className="loginLogo">Batcave</h3>
           <span className="loginDesc">Join the Cult</span>
         </div>
         <div className="loginRight">
