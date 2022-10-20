@@ -4,6 +4,7 @@ import { loginCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
 import { CircularProgress } from "@material-ui/core";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [box, setBox] = useState("");
@@ -14,10 +15,12 @@ export default function Login() {
   const handleClick = (e) => {
     e.preventDefault();
     setBox(e.target.className === "loginButton" ? "login" : "register");
-    loginCall(
-      { email: email.current.value, password: password.current.value },
-      dispatch
-    );
+    if (box === "login") {
+      loginCall(
+        { email: email.current.value, password: password.current.value },
+        dispatch
+      );
+    }
   };
 
   console.log(user, box);
@@ -25,7 +28,7 @@ export default function Login() {
     <div className="login">
       <div className="loginWrapper">
         <div className="loginLeft">
-          <h3 className="loginLogo">Batcave</h3>
+          <h3 className="loginLogo">LeetNode</h3>
           <span className="loginDesc">Join the Cult</span>
         </div>
         <div className="loginRight">
@@ -53,12 +56,15 @@ export default function Login() {
               )}
             </button>
             <span className="loginForgot">Forgot Password</span>
-            <button className="loginRegisterButton" onClick={handleClick}>
-              {isFetching && box === "register" ? (
-                <CircularProgress color="inherit" size="15px" />
-              ) : (
-                "Create an Account"
-              )}
+            <button className="loginRegisterButton">
+              <a
+                href="http://localhost:3000/register"
+                style={{
+                  textDecoration: "none",
+                  color: "#fff78e",
+                }}>
+                Create an Account
+              </a>
             </button>
           </form>
         </div>

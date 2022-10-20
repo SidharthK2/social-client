@@ -33,7 +33,7 @@ export default function Register() {
     <div className="login">
       <div className="loginWrapper">
         <div className="loginLeft">
-          <h3 className="loginLogo">Batcave</h3>
+          <h3 className="loginLogo">LeetNode</h3>
           <span className="loginDesc">Join the Cult</span>
         </div>
         <div className="loginRight">
@@ -66,10 +66,11 @@ export default function Register() {
               type="password"
               required
             />
+
+            <br />
             <button className="loginButton" type="submit">
               Sign Up
             </button>
-            <button className="loginRegisterButton">Login</button>
           </form>
         </div>
       </div>

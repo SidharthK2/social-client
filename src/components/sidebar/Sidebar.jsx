@@ -17,7 +17,6 @@ import { Link } from "react-router-dom";
 
 export default function Sidebar() {
   const { user } = useContext(AuthContext);
-  console.log(user.following);
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -36,7 +35,7 @@ export default function Sidebar() {
         <hr className="sidebarHr" />
         <ul className="sidebarFriendList">
           {user.following.map((uid) => (
-            <CloseFriend uid={uid} />
+            <CloseFriend key={uid} uid={uid} />
           ))}
         </ul>
       </div>

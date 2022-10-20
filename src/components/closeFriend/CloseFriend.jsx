@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./closeFriend.css";
 
 export default function CloseFriend({ uid }) {
@@ -10,10 +11,7 @@ export default function CloseFriend({ uid }) {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await axios.get(`users/?userId=${uid}`);
-        console.log("in cf effcts");
-        console.log(uid);
-        console.log(res);
+        const res = await axios.get(`/users/?userId=${uid}`);
         setUser(res.data);
       } catch (err) {
         console.log(err);
@@ -24,16 +22,20 @@ export default function CloseFriend({ uid }) {
 
   return (
     <li className="sidebarFriend">
-      <img
-        className="sidebarFriendImg"
-        src={
-          user.profilePicture
-            ? PF + user.profilePicture
-            : PF + "person/stockDp.jpg"
-        }
-        alt=""
-      />
-      <span className="sidebarFriendName">{user.username}</span>
+      <Link
+        to={"/profile/" + user.username}
+        style={{ textDecoration: "none", color: "#fff78e" }}>
+        <img
+          className="sidebarFriendImg"
+          src={
+            user.profilePicture
+              ? PF + user.profilePicture
+              : PF + "person/stockDp.jpg"
+          }
+          alt=""
+        />
+        <span className="sidebarFriendName">{user.username}</span>
+      </Link>
     </li>
   );
 }
