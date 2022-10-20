@@ -15,8 +15,6 @@ export default function Profile() {
   useEffect(() => {
     const fetchUser = async () => {
       const res = await axios.get(`/users?username=${username}`);
-      console.log(`profile effect res.data`);
-      console.log(res.data);
       setUser(res.data);
     };
     fetchUser();

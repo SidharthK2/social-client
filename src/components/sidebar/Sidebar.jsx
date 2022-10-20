@@ -10,7 +10,6 @@ import {
   Event,
   School,
 } from "@material-ui/icons";
-import { Users } from "../../dummyData";
 import CloseFriend from "../closeFriend/CloseFriend";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
@@ -18,6 +17,7 @@ import { Link } from "react-router-dom";
 
 export default function Sidebar() {
   const { user } = useContext(AuthContext);
+  console.log(user.following);
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -35,8 +35,8 @@ export default function Sidebar() {
         </ul>
         <hr className="sidebarHr" />
         <ul className="sidebarFriendList">
-          {Users.map((u) => (
-            <CloseFriend key={u.id} user={u} />
+          {user.following.map((uid) => (
+            <CloseFriend uid={uid} />
           ))}
         </ul>
       </div>

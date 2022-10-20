@@ -11,7 +11,6 @@ export default function Feed({ username }) {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      console.log(`in feed effects user ${username}`);
       const res = username
         ? await axios.get("/posts/profile/" + username)
         : await axios.get("/posts/timeline/" + user._id);
@@ -23,11 +22,10 @@ export default function Feed({ username }) {
     };
     fetchPosts();
   }, [username, user._id]);
-  console.log(posts);
   return (
     <div className="feed">
       <div className="feedWrapper">
-        {username === user.username && <Share />}
+        {username ? username === user.username && <Share /> : <Share />}
         {posts.map((p) => (
           <Post key={p._id} post={p} />
         ))}
