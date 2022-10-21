@@ -1,5 +1,4 @@
 import "./rightbar.css";
-import { Users } from "../../dummyData";
 import Online from "../online/Online";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
@@ -56,8 +55,8 @@ export default function Rightbar({ user }) {
   const HomeRightbar = () => {
     return (
       <>
-        <h4 className="rightbarTitle">Online Friends</h4>
-        {/* <ul className="rightbarFriendList">
+        {/* <h4 className="rightbarTitle">Online Friends</h4>
+        <ul className="rightbarFriendList">
           {Users.map((u) => (
             <Online key={u.id} user={u} />
           ))}

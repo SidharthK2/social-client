@@ -1,15 +1,5 @@
 import "./sidebar.css";
-import {
-  RssFeed,
-  Chat,
-  PlayCircleFilledOutlined,
-  Group,
-  Bookmark,
-  HelpOutline,
-  WorkOutline,
-  Event,
-  School,
-} from "@material-ui/icons";
+import { RssFeed, Chat } from "@material-ui/icons";
 import CloseFriend from "../closeFriend/CloseFriend";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";

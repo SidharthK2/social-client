@@ -11,14 +11,14 @@ export default function Topbar() {
     <div className="topbarContainer">
       <div className="topbarLeft">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <span className="logo">Batcave</span>
+          <span className="logo">LeetNode</span>
         </Link>
       </div>
       <div className="topbarCenter">
         <div className="searchbar">
           <Search className="searchIcon" />
           <input
-            placeholder="Search for friend, post or video"
+            placeholder="Search for friends, posts"
             className="searchInput"
           />
         </div>

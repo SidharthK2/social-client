@@ -1,11 +1,5 @@
 import "./share.css";
-import {
-  PermMedia,
-  Label,
-  Room,
-  EmojiEmotions,
-  Cancel,
-} from "@material-ui/icons";
+import { PermMedia, Cancel } from "@material-ui/icons";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useRef } from "react";
