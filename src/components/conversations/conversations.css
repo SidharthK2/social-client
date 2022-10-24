@@ -6,7 +6,8 @@
 }
 
 .conversations:hover {
-  background-color: rgb(236, 237, 243);
+  background-color: #575e64;
+  border-radius: 5px;
 }
 
 .conversationImg {
