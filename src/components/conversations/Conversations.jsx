@@ -19,6 +19,9 @@ const Conversations = ({ conversation, currentUser }) => {
     };
     getUser();
   }, [currentUser, conversation]);
+  // console.log(user);
+  // console.log(conversation);
+  console.log(user);
 
   return (
     <div>

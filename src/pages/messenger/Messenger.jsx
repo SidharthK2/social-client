@@ -4,7 +4,7 @@ import Topbar from "../../components/topbar/Topbar";
 import ChatOnline from "../../components/chatOnline/ChatOnline";
 import "./messenger.css";
 import { AuthContext } from "../../context/AuthContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 export default function Messenger() {
@@ -14,6 +14,8 @@ export default function Messenger() {
   const [currentChat, setCurrentChat] = useState(null);
   const [conversations, setConversations] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const scrollRef = useRef();
 
   useEffect(() => {
     const getConversations = async () => {
@@ -38,8 +40,28 @@ export default function Messenger() {
     };
     getMessages();
   }, [currentChat]);
-  console.log(messages);
 
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [messages]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const message = {
+      sender: user._id,
+      text: newMessage,
+      conversationId: currentChat._id,
+    };
+    try {
+      const res = await axios.post("/messages", message);
+      setMessages([...messages, res.data]);
+      setNewMessage("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <Topbar />
@@ -52,7 +74,11 @@ export default function Messenger() {
               className="chatMenuInput"
             />
             {conversations.map((c) => (
-              <div onClick={() => setCurrentChat(c)}>
+              <div
+                onClick={() => {
+                  setCurrentChat(c);
+                  // console.log(c);
+                }}>
                 <Conversations conversation={c} currentUser={user} />
               </div>
             ))}
@@ -64,18 +90,24 @@ export default function Messenger() {
               <>
                 <div className="chatBoxTop">
                   {messages.map((m) => (
-                    <Message message={m} own={m.sender === user._id} />
+                    <div className="scroller" ref={scrollRef}>
+                      <Message message={m} own={m.sender === user._id} />
+                    </div>
                   ))}
                 </div>
                 <div className="chatBoxBottom">
                   <textarea
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    value={newMessage}
                     placeholder="write here..."
                     className="chatMessageInput"></textarea>
-                  <button className="chatSubmitButton">Send</button>
+                  <button className="chatSubmitButton" onClick={handleSubmit}>
+                    Send
+                  </button>
                 </div>
               </>
             ) : (
-              <span className="noconversationText">Start chatting...</span>
+              <span className="noconversationText">Your Chats</span>
             )}
           </div>
         </div>
