@@ -1,6 +1,7 @@
 import "./message.css";
+import { format } from "timeago.js";
 
-const Message = ({ own }) => {
+const Message = ({ message, own }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className={own ? "message own" : "message"}>
@@ -8,12 +9,12 @@ const Message = ({ own }) => {
         {!own && (
           <img className="messageImg" src={PF + "/person/1.jpg"} alt="" />
         )}
-        <p className="messageText">this is a message</p>
+        <p className="messageText">{message.text}</p>
         {own && (
           <img className="messageImg" src={PF + "/person/1.jpg"} alt="" />
         )}
       </div>
-      <div className="messageBottom">1 hour ago</div>
+      <div className="messageBottom">{format(message.createdAt)}</div>
     </div>
   );
 };
