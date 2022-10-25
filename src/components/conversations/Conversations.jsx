@@ -21,7 +21,6 @@ const Conversations = ({ conversation, currentUser }) => {
   }, [currentUser, conversation]);
   // console.log(user);
   // console.log(conversation);
-  console.log(user);
 
   return (
     <div>

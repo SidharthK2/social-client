@@ -6,6 +6,7 @@ import "./messenger.css";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
+import io from "socket.io-client";
 
 export default function Messenger() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -15,7 +16,33 @@ export default function Messenger() {
   const [conversations, setConversations] = useState([]);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const socket = useRef();
   const scrollRef = useRef();
+
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+    socket.current.on("getMessage", (data) => {
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    arrivalMessage &&
+      currentChat?.members.includes(arrivalMessage.sender) &&
+      setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage, currentChat]);
+
+  useEffect(() => {
+    socket.current.emit("addUser", user._id);
+    socket.current.on("getUsers", (users) => {
+      console.log(users);
+    });
+  }, [user]);
 
   useEffect(() => {
     const getConversations = async () => {
@@ -41,6 +68,8 @@ export default function Messenger() {
     getMessages();
   }, [currentChat]);
 
+  useEffect(() => {});
+
   useEffect(() => {
     scrollRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -54,6 +83,17 @@ export default function Messenger() {
       text: newMessage,
       conversationId: currentChat._id,
     };
+
+    const receiverId = currentChat.members.find(
+      (member) => member !== user._id
+    );
+
+    socket.current.emit("sendMessage", {
+      senderId: user._id,
+      receiverId,
+      text: newMessage,
+    });
+
     try {
       const res = await axios.post("/messages", message);
       setMessages([...messages, res.data]);
@@ -75,6 +115,7 @@ export default function Messenger() {
             />
             {conversations.map((c) => (
               <div
+                key={c._id}
                 onClick={() => {
                   setCurrentChat(c);
                   // console.log(c);
@@ -90,7 +131,7 @@ export default function Messenger() {
               <>
                 <div className="chatBoxTop">
                   {messages.map((m) => (
-                    <div className="scroller" ref={scrollRef}>
+                    <div key={m._id} className="scroller" ref={scrollRef}>
                       <Message message={m} own={m.sender === user._id} />
                     </div>
                   ))}
